@@ -7,7 +7,8 @@ const val INTRO_MESSAGE = "숫자 야구 게임을 시작합니다"
 const val NOTHING_MESSAGE = "낫싱"
 const val INPUT_MESSAGE = "숫자를 입력해주세요 : "
 const val RETRY_MESSAGE = "게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요."
-const val SUCCESS_MESSAGE = "3개의 숫자를 모두 맞히셨습니다! 게임 종료"
+const val SUCCESS_MESSAGE = "3개의 숫자를 모두 맞히셨습니다! "
+const val END_MESSAGE = "게임 종료"
 fun main() {
     println(INTRO_MESSAGE)
     val computer = mutableListOf<String>()
@@ -18,7 +19,9 @@ fun main() {
             computer.add(randomNumber)
         }
     }
+    print(computer)
     input(computer)
+
 }
 
 /**
@@ -29,7 +32,7 @@ fun input(computer: MutableList<String>) :Unit{
 
     val request:String = Console.readLine()
     val user = request.map{i -> i.toString()}
-    Valiadation(user)
+    validation(user)
 
     val result: Pair<Int, Int> = compare(computer, user)
     if(result == Pair(0,0)){
@@ -37,7 +40,9 @@ fun input(computer: MutableList<String>) :Unit{
         input(computer)
     }
     else if(result == Pair(0,3)){
-        println(SUCCESS_MESSAGE)
+        println("${result.second}스트라이크")
+        print(SUCCESS_MESSAGE)
+        println(END_MESSAGE)
         println(RETRY_MESSAGE)
         val request:String = Console.readLine()
         if(request == "1"){

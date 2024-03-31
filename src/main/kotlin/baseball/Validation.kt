@@ -2,7 +2,7 @@ package baseball
 
 
 /* 예외 처리에 대한 함수 */
-fun Valiadation(list: List<String>):Unit{
+fun validation(list: List<String>):Unit{
     if(list.isEmpty())
         throw IllegalArgumentException()
     else if(list.size !=3)
