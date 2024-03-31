@@ -5,7 +5,8 @@ import camp.nextstep.edu.missionutils.Console
 
 fun main() {
     println("숫자 야구 게임을 시작합니다.")
-
+    var countStrike = 0
+    var countBall = 0
     val computer = mutableListOf<String>()
     while (computer.size < 3) {
         val randomNumber = Randoms.pickNumberInRange(1, 9).toString()
@@ -20,9 +21,8 @@ fun main() {
     //    } // "123"
     print("숫자를 입력해주세요 : ")
     val request:String = Console.readLine()
-    val user = mutableListOf(String)
-    while (user.size < 3){
-
-    }
+    var user = request.toList()
+  //  print(user)
 
 }
+fun count
