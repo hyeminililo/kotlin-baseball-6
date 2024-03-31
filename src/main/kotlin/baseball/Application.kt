@@ -18,16 +18,13 @@ fun main() {
             computer.add(randomNumber)
         }
     }
-    print(computer)
-    while (true){
-        input(computer)
-
-    }
-
-    }
-/*출력받고, 야구게임에 대한 결과를 나타냄*/
-fun input(computer: MutableList<String>) :Boolean{
-    var keepGoing = true
+    println(computer)
+    input(computer)
+}
+/**
+ * 컴퓨터의 결과값을 받고, 야구게임에 대한 결과를 나타냄
+ * */
+fun input(computer: MutableList<String>) :Unit{
     print(INPUT_MESSAGE)
     val request:String = Console.readLine()
     val user = request.map{i -> i.toString()}
@@ -36,12 +33,21 @@ fun input(computer: MutableList<String>) :Boolean{
     val result: Pair<Int, Int> = compare(computer, user)
     if(result == Pair(0,0)){
         println(NOTHING_MESSAGE)
-        return keepGoing
+        input(computer)
     }
     else if(result == Pair(3,0)){
         println(SUCCESS_MESSAGE)
-        keepGoing = false
-        return keepGoing
+        println(RETRY_MESSAGE)
+        val request:String = Console.readLine()
+        if(request == "1"){
+            main()
+        }
+        else if(request == "2"){
+            return
+        }
+        else{
+            throw IllegalArgumentException()
+        }
     }
     else {
         if(result.first == 0){
@@ -52,8 +58,9 @@ fun input(computer: MutableList<String>) :Boolean{
         }
         else {
             println("${result.first}스트라이크 ${result.second}볼")
+
         }
-        return keepGoing
+        input(computer)
     }
 
 }
