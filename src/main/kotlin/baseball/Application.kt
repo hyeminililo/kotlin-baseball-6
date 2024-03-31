@@ -18,24 +18,25 @@ fun main() {
             computer.add(randomNumber)
         }
     }
-    println(computer)
     input(computer)
 }
+
 /**
  * 컴퓨터의 결과값을 받고, 야구게임에 대한 결과를 나타냄
  * */
 fun input(computer: MutableList<String>) :Unit{
     print(INPUT_MESSAGE)
+
     val request:String = Console.readLine()
     val user = request.map{i -> i.toString()}
-
+    Valiadation(user)
 
     val result: Pair<Int, Int> = compare(computer, user)
     if(result == Pair(0,0)){
         println(NOTHING_MESSAGE)
         input(computer)
     }
-    else if(result == Pair(3,0)){
+    else if(result == Pair(0,3)){
         println(SUCCESS_MESSAGE)
         println(RETRY_MESSAGE)
         val request:String = Console.readLine()
@@ -51,13 +52,13 @@ fun input(computer: MutableList<String>) :Unit{
     }
     else {
         if(result.first == 0){
-            println("${result.second}볼")
+            println("${result.second}스트라이크")
         }
         else if(result.second==0){
-            println("${result.first}스트라이크")
+            println("${result.first}볼")
         }
         else {
-            println("${result.first}스트라이크 ${result.second}볼")
+            println("${result.first}볼 ${result.second}스트라이크")
 
         }
         input(computer)
@@ -86,6 +87,6 @@ fun compare(computer: MutableList<String>, user: List<String>): Pair<Int, Int>{
         }
     }
 
-    return Pair(countStrike, countBall)
+    return Pair( countBall,countStrike)
 }
 
