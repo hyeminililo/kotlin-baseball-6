@@ -19,7 +19,6 @@ fun main() {
             computer.add(randomNumber)
         }
     }
-    print(computer)
     input(computer)
 
 }
