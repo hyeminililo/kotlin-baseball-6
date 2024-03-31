@@ -11,6 +11,7 @@ const val SUCCESS_MESSAGE = "3개의 숫자를 모두 맞히셨습니다! 게임
 fun main() {
     println(INTRO_MESSAGE)
     val computer = mutableListOf<String>()
+
     while (computer.size < 3) {
         val randomNumber = Randoms.pickNumberInRange(1, 9).toString()
         if (!computer.contains(randomNumber)) {
@@ -18,6 +19,15 @@ fun main() {
         }
     }
     print(computer)
+    while (true){
+        input(computer)
+
+    }
+
+    }
+/*출력받고, 야구게임에 대한 결과를 나타냄*/
+fun input(computer: MutableList<String>) :Boolean{
+    var keepGoing = true
     print(INPUT_MESSAGE)
     val request:String = Console.readLine()
     val user = request.map{i -> i.toString()}
@@ -26,9 +36,12 @@ fun main() {
     val result: Pair<Int, Int> = compare(computer, user)
     if(result == Pair(0,0)){
         println(NOTHING_MESSAGE)
+        return keepGoing
     }
     else if(result == Pair(3,0)){
         println(SUCCESS_MESSAGE)
+        keepGoing = false
+        return keepGoing
     }
     else {
         if(result.first == 0){
@@ -40,9 +53,10 @@ fun main() {
         else {
             println("${result.first}스트라이크 ${result.second}볼")
         }
-    }
+        return keepGoing
     }
 
+}
 /**
  * 두 배열을 받아서 볼과 스트라이크 개수 반환
  */
