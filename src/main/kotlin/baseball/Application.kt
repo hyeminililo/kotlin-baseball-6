@@ -22,8 +22,10 @@ const val MESSAGE_OF_END = "게임을 종료합니다."
 fun main() {
     var isPlaying = true
     println(MESSAGE_OF_START)
+
     while (isPlaying) {
         playGame()
+        isPlaying = askForRestart()
     }
 
     println(MESSAGE_OF_END)
@@ -31,6 +33,7 @@ fun main() {
 
 fun playGame() {
     val computerNumberList = makeRandomNumbersOfList()
+
     var result:MutableMap<String, Int> = mutableMapOf(NUMBER_OF_BALL to 0, NUMBER_OF_STRIKE to 0)
 
     while (result[NUMBER_OF_STRIKE] != NUMBER_OF_DIGITS) {
@@ -85,7 +88,7 @@ fun getResult(
 
 fun printResult(result: MutableMap<String, Int>) {
     if (result[NUMBER_OF_STRIKE] == NUMBER_OF_DIGITS) {
-        println("${ NUMBER_OF_DIGITS}${WORD_OF_STRIKE}")
+        println("${NUMBER_OF_DIGITS}${WORD_OF_STRIKE}")
         println(MESSAGE_OF_WIN)
     }
 
@@ -101,4 +104,18 @@ fun printResult(result: MutableMap<String, Int>) {
         println(WORD_OF_NOTHING)
     }
     println()
+}
+
+fun askForRestart(): Boolean {
+    println(MESSAGE_OF_ASK_RESTART)
+    val choice = Console.readLine()
+    if (choice == WORD_OF_RESTART) {
+        return true
+    }
+    if (choice == WORD_OF_END) {
+       return false
+    }
+    else {
+        throw IllegalArgumentException("${WORD_OF_RESTART}이나 $WORD_OF_END 외에 다른 것을 입력하셨습니다.")
+    }
 }
