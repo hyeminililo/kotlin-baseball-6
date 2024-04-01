@@ -10,6 +10,9 @@ const val WORD_OF_BALL = "볼"
 const val WORD_OF_STRIKE = "스트라이크"
 const val WORD_OF_NOTHING = "낫싱"
 
+const val NUMBER_OF_BALL = "numberOfBall"
+const val NUMBER_OF_STRIKE = "numberOfStrike"
+
 const val MESSAGE_OF_START = "숫자 야구 게임을 시작합니다"
 const val MESSAGE_OF_INPUT  = "숫자를 입력해주세요 : "
 const val MESSAGE_OF_ASK_RESTART = "게임을 새로 시작하려면 ${WORD_OF_RESTART}, 종료하려면 ${WORD_OF_END}를 입력하세요."
@@ -28,6 +31,8 @@ fun main() {
 
 fun playGame() {
     val computerNumberList = makeRandomNumbersOfList()
+
+    var result:MutableMap<String, Int> = mutableMapOf(NUMBER_OF_BALL to 0, NUMBER_OF_STRIKE to 0)
 }
 
 fun makeRandomNumbersOfList() {
@@ -39,3 +44,4 @@ fun makeRandomNumbersOfList() {
         }
     }
 }
+
