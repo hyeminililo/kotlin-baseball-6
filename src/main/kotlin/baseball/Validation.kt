@@ -23,7 +23,7 @@ fun isContainsDuplicated(input: String) {
 }
 
 fun isCorrectNumberOfDigit(input: String) {
-    if (input.length != NUM_OF_DIGITS) {
+    if (input.length != NUMBER_OF_DIGITS) {
         throw IllegalArgumentException("규칙에 맞지 않는 길이의 숫자를 입력하였습니다.")
     }
 }
