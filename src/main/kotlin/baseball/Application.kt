@@ -1,8 +1,6 @@
 package baseball
 import camp.nextstep.edu.missionutils.Randoms
-import kotlin.collections.mutableListOf as mutableListOf
 import camp.nextstep.edu.missionutils.Console
-import javax.swing.text.StyledEditorKit.BoldAction
 
 const val NUM_OF_DIGITS = 3
 
@@ -19,7 +17,7 @@ const val MESSAGE_OF_WIN = "${NUM_OF_DIGITS}개의 숫자를 모두 맞히셨습
 const val MESSAGE_OF_END = "게임을 종료합니다."
 
 fun main() {
-    var isPlaying:Boolean = true
+    var isPlaying = true
     println(MESSAGE_OF_START)
     while (isPlaying) {
         playGame()
@@ -29,5 +27,15 @@ fun main() {
 }
 
 fun playGame() {
+    val computerNumberList = makeRandomNumbersOfList()
+}
 
+fun makeRandomNumbersOfList() {
+    val computer: MutableList<Int> = mutableListOf()
+    while (computer.size < NUM_OF_DIGITS) {
+        val randomNumber = Randoms.pickNumberInRange(1, 9)
+        if (!computer.contains(randomNumber)) {
+            computer.add(randomNumber)
+        }
+    }
 }
