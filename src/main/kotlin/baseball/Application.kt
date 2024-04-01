@@ -101,7 +101,7 @@ fun printResult(result: MutableMap<String, Int>) {
     }
 
     if (result[NUMBER_OF_STRIKE] == 0 && result[NUMBER_OF_BALL] == 0) {
-        println(WORD_OF_NOTHING)
+        print(WORD_OF_NOTHING)
     }
     println()
 }
