@@ -10,7 +10,7 @@ fun isInteger(input: String) {
     try{
         input.toInt()
     } catch (e: Exception) {
-        throw IllegalArgumentException("문자를 입력하였습니다. 숫자를 입력해주세요.")
+        throw IllegalArgumentException("숫자를 입력해주세요.")
     }
 }
 

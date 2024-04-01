@@ -36,18 +36,24 @@ fun playGame() {
 
     while (result[NUMBER_OF_STRIKE] != NUMBER_OF_DIGITS) {
         print(MESSAGE_OF_INPUT)
-        val playerNumbers = Console.readLine()?.let { makePlayerNumbersOfList(it) }
+        val playerNumberList = Console.readLine()?.let { makePlayerNumbersOfList(it) }
+
+        if (playerNumberList != null) {
+            result = getResult(computerNumberList, playerNumberList)
+        }
+
     }
 }
 
-fun makeRandomNumbersOfList() {
-    val computer = mutableListOf<Int>()
-    while (computer.size < NUMBER_OF_DIGITS) {
+fun makeRandomNumbersOfList(): MutableList<Int> {
+    val computerNumberList = mutableListOf<Int>()
+    while (computerNumberList.size < NUMBER_OF_DIGITS) {
         val randomNumber = Randoms.pickNumberInRange(1, 9)
-        if (!computer.contains(randomNumber)) {
-            computer.add(randomNumber)
+        if (!computerNumberList.contains(randomNumber)) {
+            computerNumberList.add(randomNumber)
         }
     }
+    return computerNumberList
 }
 
 fun makePlayerNumbersOfList(input: String):MutableList<Int> {
@@ -59,4 +65,20 @@ fun makePlayerNumbersOfList(input: String):MutableList<Int> {
     }
 
     return userNumbers
+}
+
+fun getResult(
+    computerNumberList: MutableList<Int>,
+    userNumberList: MutableList<Int>
+): MutableMap<String, Int> {
+
+    val numberOfStrike: Int =
+        userNumberList.count { computerNumberList.indexOf(it) == userNumberList.indexOf(it)}
+
+    val numberOfBall: Int =
+        userNumberList.count { computerNumberList.contains(it) } - numberOfStrike
+
+
+    val result = mutableMapOf(NUMBER_OF_BALL to numberOfBall, NUMBER_OF_STRIKE to numberOfStrike)
+    return result
 }
