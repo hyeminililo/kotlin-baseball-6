@@ -5,7 +5,7 @@ import camp.nextstep.edu.missionutils.Console
 import java.lang.Error
 import java.util.Collections
 
-const val INTRO_MESSAGE = "숫자 야구 게임을 시작합니다"
+const val INTRO_MESSAGE = "숫자 야구 게임을 시작합니다."
 const val NOTHING_MESSAGE = "낫싱"
 const val INPUT_MESSAGE = "숫자를 입력해주세요 : "
 const val RETRY_MESSAGE = "게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요."
@@ -31,10 +31,8 @@ fun randomComputer():List<String>{
 }
 fun inputUser(computer: List<String>) :Unit{
     print(INPUT_MESSAGE)
-    println(computer)
     val request:String = Console.readLine()
     val user = request.map{i -> i.toString()}
-    print(user is MutableList)
     validation(user)
     checkBaseballGameResult(computer, user)
 
@@ -50,18 +48,19 @@ fun checkBaseballGameResult(computer: List<String>, user:List<String> ) {
         if(result ==Pair(0,3)){
             println("${result.second}스트라이크")
             print(SUCCESS_MESSAGE)
+            println(END_MESSAGE)
             gameRestart()
         }
-       else {
+       if(result!=Pair(0,0 )&& result !=Pair(0,3)) {
            if(result.first ==0){
                println("${result.second}스트라이크")
            }
             if (result.second==0){
                 println("${result.first}볼")
             }
-            else {
+            if ( result.first!=0 && result.second !=0 )
+             {
                 println("${result.first}볼 ${result.second}스트라이크")
-
             }
             inputUser(computer)
         }
@@ -75,7 +74,7 @@ fun compareNumbersOf(computer: List<String>, user: List<String>): Pair<Int, Int>
     for (i in user.indices) {
         // i가 컴퓨터 배열 중 존재한다면
         val res:Boolean = computer.contains(user[i])
-        if (res == true) {
+        if (res) {
             // 근데 위치까지 같다면
             if (user[i] == computer[i]) {
                 countStrike++
@@ -91,16 +90,15 @@ fun compareNumbersOf(computer: List<String>, user: List<String>): Pair<Int, Int>
 }
 fun gameRestart(){
     println(RETRY_MESSAGE)
-    val request: String = Console.readLine()
+    val request: Int = Console.readLine().toInt()
     when(request){
-        "1"->{
-            println("새 게임을 시작합니다.")
+        1->{
             inputUser(randomComputer())
-
         }
-        "2"-> {
-            println(END_MESSAGE)
-            return }
+
+        2-> {
+
+             }
         else -> throw IllegalArgumentException("1 또는 2를 입력하세요")
     }
 }
