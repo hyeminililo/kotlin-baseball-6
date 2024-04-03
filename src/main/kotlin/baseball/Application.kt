@@ -12,28 +12,31 @@ const val RETRY_MESSAGE = "게임을 새로 시작하려면 1, 종료하려면 2
 const val SUCCESS_MESSAGE = "3개의 숫자를 모두 맞히셨습니다! "
 const val END_MESSAGE = "게임 종료"
 const val COMPUTER_RANDOM_SIZE = 3
+
 fun main() {
     println(INTRO_MESSAGE)
-    val computer = mutableListOf<String>()
-     input(computer)
+    val computer = randomComputer().toList()
+    input(computer)
 
 }
 
-/**
- * 컴퓨터의 결과값과 사용자의 입출력 받기
- * */
-fun input(computer: MutableList<String>) :Unit{
-    print(INPUT_MESSAGE)   // 게임 시작
-    println(computer)
-    if(computer.isEmpty()){
+fun randomComputer():List<String>{
+    val computer = mutableListOf<String>()
         while (computer.size < COMPUTER_RANDOM_SIZE) {
             val randomNumber = Randoms.pickNumberInRange(1, 9).toString()
             if (!computer.contains(randomNumber)) {
                 computer.add(randomNumber)
             }
         }
-    }
-    print(computer)
+    return computer
+}
+fun input(computer: List<String>) :Unit{
+    print(INPUT_MESSAGE)// 게임 시작
+
+
+
+
+    println(computer)
     val request:String = Console.readLine()
     val user = request.map{i -> i.toString()}
     print(user is MutableList)
@@ -43,9 +46,8 @@ fun input(computer: MutableList<String>) :Unit{
 
 
 }
-// 게임에 대한 결과를 반환하는 메소드
-fun checkBaseballGameResult(computer: MutableList<String>, user:List<String> ) {
-        val result: Pair<Int, Int> = compare(computer, user)
+fun checkBaseballGameResult(computer: List<String>, user:List<String> ) {
+        val result: Pair<Int, Int> = compareNumbersOf(computer, user)
         if(result ==Pair(0,0)){
             println(NOTHING_MESSAGE)
             input(computer)
@@ -53,20 +55,7 @@ fun checkBaseballGameResult(computer: MutableList<String>, user:List<String> ) {
         if(result ==Pair(0,3)){
             println("${result.second}스트라이크")
             print(SUCCESS_MESSAGE)
-            println(END_MESSAGE)
-            println(RETRY_MESSAGE)
-            val request: String = Console.readLine()
-            try {
-                if (request == "1"){
-                   computer.remove("")
-                    input(computer)
-                }
-                if (request == "2"){
-                    return
-                }
-            }catch (e: Error){
-                throw  IllegalArgumentException()
-            }
+            gameRestart()
         }
        else {
            if(result.first ==0){
@@ -81,12 +70,13 @@ fun checkBaseballGameResult(computer: MutableList<String>, user:List<String> ) {
             }
             input(computer)
         }
+
 }
 
 /**
  * 두 배열을 받아서 볼과 스트라이크 개수 반환
  */
-fun compare(computer: MutableList<String>, user: List<String>): Pair<Int, Int>{
+fun compareNumbersOf(computer: List<String>, user: List<String>): Pair<Int, Int>{
     var countStrike = 0
     var countBall = 0
 
@@ -106,5 +96,20 @@ fun compare(computer: MutableList<String>, user: List<String>): Pair<Int, Int>{
     }
 
     return Pair( countBall,countStrike)
+}
+fun gameRestart(){
+    println(RETRY_MESSAGE)
+    val request: String = Console.readLine()
+    when(request){
+        "1"->{
+            println("새 게임을 시작합니다.")
+            input(randomComputer())
+
+        }
+        "2"-> {
+            println(END_MESSAGE)
+            return }
+        else -> throw IllegalArgumentException("잘못된 입력입니다.")
+    }
 }
 
