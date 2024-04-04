@@ -1,4 +1,5 @@
 package baseball
+
 import camp.nextstep.edu.missionutils.Randoms
 import kotlin.collections.mutableListOf as mutableListOf
 import camp.nextstep.edu.missionutils.Console
@@ -19,87 +20,85 @@ fun main() {
     inputUser(computer)
 }
 
-fun randomComputer():List<String>{
+fun randomComputer(): List<String> {
     val computer = mutableListOf<String>()
-        while (computer.size < COMPUTER_RANDOM_SIZE) {
-            val randomNumber = Randoms.pickNumberInRange(1, 9).toString()
-            if (!computer.contains(randomNumber)) {
-                computer.add(randomNumber)
-            }
+    while (computer.size < COMPUTER_RANDOM_SIZE) {
+        val randomNumber = Randoms.pickNumberInRange(1, 9).toString()
+        if (!computer.contains(randomNumber)) {
+            computer.add(randomNumber)
         }
+    }
     return computer
 }
-fun inputUser(computer: List<String>) :Unit{
+
+fun inputUser(computer: List<String>): Unit {
     print(INPUT_MESSAGE)
-    val request:String = Console.readLine()
-    val user = request.map{i -> i.toString()}
+    val request: String = Console.readLine()
+    val user = request.map { i -> i.toString() }
     validation(user)
     checkBaseballGameResult(computer, user)
 
 
-
 }
-fun checkBaseballGameResult(computer: List<String>, user:List<String> ) {
-        val result: Pair<Int, Int> = compareNumbersOf(computer, user)
-        if(result ==Pair(0,0)){
-            println(NOTHING_MESSAGE)
-            inputUser(computer)
-        }
-        if(result ==Pair(0,3)){
+
+fun checkBaseballGameResult(computer: List<String>, user: List<String>) {
+    val result: Pair<Int, Int> = compareNumbersOf(computer, user)
+    if (result == Pair(0, 0)) {
+        println(NOTHING_MESSAGE)
+        inputUser(computer)
+    }
+    if (result == Pair(0, 3)) {
+        println("${result.second}스트라이크")
+        print(SUCCESS_MESSAGE)
+        println(END_MESSAGE)
+        gameRestart()
+    }
+    if (result != Pair(0, 0) && result != Pair(0, 3)) {
+        if (result.first == 0) {
             println("${result.second}스트라이크")
-            print(SUCCESS_MESSAGE)
-            println(END_MESSAGE)
-            gameRestart()
         }
-       if(result!=Pair(0,0 )&& result !=Pair(0,3)) {
-           if(result.first ==0){
-               println("${result.second}스트라이크")
-           }
-            if (result.second==0){
-                println("${result.first}볼")
-            }
-            if ( result.first!=0 && result.second !=0 )
-             {
-                println("${result.first}볼 ${result.second}스트라이크")
-            }
-            inputUser(computer)
+        if (result.second == 0) {
+            println("${result.first}볼")
         }
+        if (result.first != 0 && result.second != 0) {
+            println("${result.first}볼 ${result.second}스트라이크")
+        }
+        inputUser(computer)
+    }
 
 }
 
-fun compareNumbersOf(computer: List<String>, user: List<String>): Pair<Int, Int>{
+fun compareNumbersOf(computer: List<String>, user: List<String>): Pair<Int, Int> {
     var countStrike = 0
     var countBall = 0
 
     for (i in user.indices) {
-        // i가 컴퓨터 배열 중 존재한다면
-        val res:Boolean = computer.contains(user[i])
+        val res: Boolean = computer.contains(user[i])
         if (res) {
-            // 근데 위치까지 같다면
             if (user[i] == computer[i]) {
                 countStrike++
             }
-            // 위치는 다르다면
             else {
                 countBall++
             }
         }
     }
 
-    return Pair( countBall,countStrike)
+    return Pair(countBall, countStrike)
 }
-fun gameRestart(){
+
+fun gameRestart() {
     println(RETRY_MESSAGE)
     val request: Int = Console.readLine().toInt()
-    when(request){
-        1->{
+    when (request) {
+        1 -> {
             inputUser(randomComputer())
         }
 
-        2-> {
+        2 -> {
 
-             }
+        }
+
         else -> throw IllegalArgumentException("1 또는 2를 입력하세요")
     }
 }
-
